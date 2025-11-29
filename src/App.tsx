@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
+import "./App.css";
+import ExportPage from "./export/ExportPage";
+import Layout from "./layout/Layout";
+import LoginPage from "./login/LoginPage";
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function LoginWrapper({ onLogin }: { onLogin: (employeeId: string) => void }) {
+  const navigate = useNavigate();
+  function handleLogin(employeeId: string) {
+    onLogin(employeeId);
+    navigate(`/${employeeId}/export`);
+  }
+  return <LoginPage onLogin={handleLogin} />;
 }
 
-export default App
+function App() {
+  const [employeeId, setEmployeeId] = useState<string | null>(null);
+
+  return (
+    <BrowserRouter>
+      {!employeeId ? (
+        <Routes>
+          <Route path="*" element={<LoginWrapper onLogin={setEmployeeId} />} />
+        </Routes>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Navigate to={`/${employeeId}/export`} />} />
+          <Route
+            path="/:employeeId/*"
+            element={
+              <Layout>
+                <Routes>
+                  <Route path="export" element={<ExportPage />} />
+                  <Route path="import" element={<h1>Import</h1>} />
+                  <Route
+                    path="flight-schedules"
+                    element={<h1>Flight Schedules</h1>}
+                  />
+                  <Route
+                    path="cargo-tracking"
+                    element={<h1>Cargo Tracking</h1>}
+                  />
+                  <Route path="warehouse" element={<h1>Warehouse</h1>} />
+                  <Route path="users" element={<h1>Users</h1>} />
+                  <Route path="settings" element={<h1>Settings</h1>} />
+                  <Route path="*" element={<Navigate to="export" />} />
+                </Routes>
+              </Layout>
+            }
+          />
+        </Routes>
+      )}
+    </BrowserRouter>
+  );
+}
+
+export default App;
