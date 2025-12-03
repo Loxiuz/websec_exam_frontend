@@ -3,6 +3,7 @@ interface LayoutProps {
 }
 
 interface ExportDtoRequest {
+  id: number,
   employeeId: number;
   exportFormat: string;
   selectedEntities: string;

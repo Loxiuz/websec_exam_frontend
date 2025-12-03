@@ -14,11 +14,11 @@ async function createExportRequest(
     body: JSON.stringify(exportRequestDTO),
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to download the file.");
-  } else {
+  if (response.ok) {
     downloadFile(response, exportRequestDTO.fileName);
     return true;
+  } else {
+    throw new Error("Failed to download the file.");
   }
 }
 

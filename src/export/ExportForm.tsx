@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 export default function ExportForm() {
   const { employeeId } = useParams();
   const [formData, setFormData] = useState<ExportDtoRequest>({
+    id: -1,
     employeeId: Number(employeeId),
     exportFormat: "csv",
     selectedEntities: "",
@@ -33,14 +34,6 @@ export default function ExportForm() {
     formData,
     selectedEntitiesFilters,
   ]);
-
-  useEffect(() => {
-    if (formData.employeeId === 0) {
-      // Simulate fetching employee ID from a session or context
-      //TODO: replace with actual logic to get employee ID
-      setFormData((prev) => ({ ...prev, employeeId: 1 }));
-    }
-  }, [setFormData, formData]);
 
   async function handleFormSubit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
