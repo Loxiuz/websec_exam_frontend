@@ -11,7 +11,7 @@ export default function LoginPage() {
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!username || !password) {
-      console.log(`${username}, ${password}`);
+      alert("Please enter both username and password.");
       return;
     }
 

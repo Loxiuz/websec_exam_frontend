@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { AppliedFilters, ExportDtoRequest } from "../types";
 import { createExportRequest } from "../api/exportApi";
 import { VALID_EXPORT_FILTER_FIELDS } from "../constants/validFilterFieldsForEntities";
@@ -20,20 +20,6 @@ export default function ExportForm() {
   const [selectedEntitiesFilters, setSelectedEntitiesFilters] =
     useState<AppliedFilters>([]);
 
-  useEffect(() => {
-    console.log("Selected entities:", selectedEntities);
-    console.log("Selected entities filters:", selectedEntitiesFilters);
-    console.log("Export format:", formData.exportFormat);
-    console.log("File name:", formData.fileName);
-    console.log("Form data:", formData);
-  }, [
-    selectedEntities,
-    formData.exportFormat,
-    formData.fileName,
-    formData,
-    selectedEntitiesFilters,
-  ]);
-
   async function handleFormSubit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const body = {
@@ -43,7 +29,6 @@ export default function ExportForm() {
       fileName: formData.fileName + `.${formData.exportFormat}`,
     };
     if (selectedEntities.length > 0) {
-      console.log(body);
       createExportRequest(body);
     } else {
       alert("Select atleast 1 entity");
@@ -155,8 +140,6 @@ export default function ExportForm() {
     entity: string
   ) {
     const field = e.target.value;
-    console.log("Selected field:", field, "for entity:", entity);
-    console.log(selectedEntitiesFilters.filter((f) => f[entity].field === field))
     if (selectedEntitiesFilters.filter((f) => f[entity].field === field).length > 0) {
       alert("you can only have one of each filter field per entity");
     } else {

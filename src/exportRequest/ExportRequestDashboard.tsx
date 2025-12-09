@@ -21,11 +21,6 @@ export default function ExportRequestDashboard() {
         fetchExportRequests();
     }, []);
 
-    useEffect(() => {
-        console.log("Export Requests:", exportRequests);
-    }, [exportRequests]);
-
-
     function createDateString(dateString: string): string {
         const date = new Date(dateString);
 

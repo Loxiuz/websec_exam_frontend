@@ -12,7 +12,6 @@ export default function DashboardAppliedFiltersDialog(props: { appliedFilters: A
                 {appliedFilters.map((filter, i) => {
                     const entity = Object.keys(filter)[0];
                     const field = filter[entity].field;
-                    console.log("Entity:", entity, "Field:", field);
                     const value = filter[entity].value;
                     return (
                         <li key={entity + i} id="applied-filter-dialog-li">
