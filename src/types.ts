@@ -3,7 +3,6 @@ interface LayoutProps {
 }
 
 interface LoginResponse{
-  accessToken: string;
   role: string;
   employeeId: string;
 }
@@ -11,6 +10,10 @@ interface LoginResponse{
 interface LoginRequest {
   username: string;
   password: string;
+}
+
+interface IsLoggedInResponse {
+  loggedIn: boolean;
 }
 
 interface AuthContextType {
@@ -66,4 +69,5 @@ export type {
   LoginResponse,
   LoginRequest,
   AuthContextType,
+  IsLoggedInResponse
 };

@@ -9,10 +9,7 @@ export default function ExportForm() {
 
   const [formData, setFormData] = useState<ExportDtoRequest>({
     id: null,
-    employeeId: document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("employeeId="))
-      ?.split("=")[1] as string,
+    employeeId: localStorage.getItem("employeeId") || "",
     exportFormat: "csv",
     selectedEntities: "",
     appliedFilters: [] as AppliedFilters,

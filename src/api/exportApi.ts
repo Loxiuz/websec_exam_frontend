@@ -3,10 +3,6 @@ import type {ExportDtoRequest, ExportDtoResponse} from "../types";
 
 const exportUrl = `${API_URL}/export`;
 
-function getAuth(){
- return localStorage.getItem("accessToken");
-}
-
 async function createExportRequest(
   exportRequestDTO: ExportDtoRequest
 ): Promise<boolean> {
@@ -14,7 +10,6 @@ async function createExportRequest(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${getAuth()}`,
     },
     body: JSON.stringify(exportRequestDTO),
   });
@@ -32,7 +27,6 @@ async function getAllExportRequests(): Promise<ExportDtoResponse[]> {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${getAuth()}`,
     },
   });
 

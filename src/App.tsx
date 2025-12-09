@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={
           <RequireAuth allowedRoles={["ROLE_USER", "ROLE_ADMIN"]}>
             <Layout />

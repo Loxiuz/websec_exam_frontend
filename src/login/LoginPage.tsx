@@ -1,13 +1,11 @@
 import { useState } from "react";
 import "./LoginPage.css";
 import { login } from "../api/authApi";
-import { useAuth } from "../auth/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuth } = useAuth();
   const nav = useNavigate();
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,9 +22,9 @@ export default function LoginPage() {
       setPassword("");
       return;
     }
-    document.cookie = `employeeId=${encodeURIComponent(response.employeeId)}; path=/; max-age=86400; SameSite=Strict`;
-    setAuth(response);
-    localStorage.setItem("accessToken", response.accessToken);
+    for (const [key, value] of Object.entries(response)) {
+      localStorage.setItem(key, value);
+    }
     nav("/export");
   }
 
