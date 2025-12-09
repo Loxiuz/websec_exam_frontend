@@ -4,13 +4,15 @@ import { createExportRequest } from "../api/exportApi";
 import { VALID_EXPORT_FILTER_FIELDS } from "../constants/validFilterFieldsForEntities";
 import "./ExportForm.css";
 import ExportRequestDashboard from "../exportRequest/ExportRequestDashboard";
-import { useParams } from "react-router-dom";
 
 export default function ExportForm() {
-  const { employeeId } = useParams();
+
   const [formData, setFormData] = useState<ExportDtoRequest>({
-    id: -1,
-    employeeId: Number(employeeId),
+    id: null,
+    employeeId: document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("employeeId="))
+      ?.split("=")[1] as string,
     exportFormat: "csv",
     selectedEntities: "",
     appliedFilters: [] as AppliedFilters,

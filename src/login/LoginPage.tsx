@@ -1,31 +1,33 @@
 import { useState } from "react";
-import { loginInfo } from "../constants/loginInfo";
 import "./LoginPage.css";
+import { login } from "../api/authApi";
+import { useAuth } from "../auth/useAuth";
+import { useNavigate } from "react-router-dom";
 
-export default function LoginPage({
-  onLogin,
-}: {
-  onLogin: (employeeId: string) => void;
-}) {
-  const [employeeId, setEmployeeId] = useState("");
+export default function LoginPage() {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setAuth } = useAuth();
+  const nav = useNavigate();
 
-  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!employeeId || !password) {
-      alert("Please enter both username and password.");
+    if (!username || !password) {
+      console.log(`${username}, ${password}`);
       return;
     }
-    for (const login of loginInfo) {
-      if (login.employeeId === employeeId && login.password === password) {
-        onLogin(employeeId);
-        return;
-      }
+
+    const response = await login({ username, password });
+    if (!response) {
+      alert("Login failed. Please try again.");
+      setUsername("");
+      setPassword("");
+      return;
     }
-    alert("Invalid username or password. Please try again.");
-    setEmployeeId("");
-    setPassword("");
-    return;
+    document.cookie = `employeeId=${encodeURIComponent(response.employeeId)}; path=/; max-age=86400; SameSite=Strict`;
+    setAuth(response);
+    localStorage.setItem("accessToken", response.accessToken);
+    nav("/export");
   }
 
   return (
@@ -33,14 +35,14 @@ export default function LoginPage({
       <p>Please enter your credentials to log in.</p>
       <form onSubmit={handleFormSubmit}>
         <div>
-          <label htmlFor="employeeId">Employee ID:</label>
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
-            id="employeeId"
-            name="employeeId"
+            id="username"
+            name="username"
             onChange={(e) => {
               e.preventDefault();
-              setEmployeeId(e.target.value);
+              setUsername(e.target.value);
             }}
             required
           />

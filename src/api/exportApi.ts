@@ -1,7 +1,11 @@
 import { API_URL } from "../constants/settings";
-import type {ExportDtoRequest, ExportDtoResponse } from "../types";
+import type {ExportDtoRequest, ExportDtoResponse} from "../types";
 
 const exportUrl = `${API_URL}/export`;
+
+function getAuth(){
+ return localStorage.getItem("accessToken");
+}
 
 async function createExportRequest(
   exportRequestDTO: ExportDtoRequest
@@ -10,6 +14,7 @@ async function createExportRequest(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${getAuth()}`,
     },
     body: JSON.stringify(exportRequestDTO),
   });
@@ -27,6 +32,7 @@ async function getAllExportRequests(): Promise<ExportDtoResponse[]> {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${getAuth()}`,
     },
   });
 
@@ -51,5 +57,7 @@ async function downloadFile(response: Response, filename?: string) {
 
   window.URL.revokeObjectURL(url);
 }
+
+
 
 export { createExportRequest, getAllExportRequests };

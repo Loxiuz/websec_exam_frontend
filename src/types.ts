@@ -2,9 +2,25 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+interface LoginResponse{
+  accessToken: string;
+  role: string;
+  employeeId: string;
+}
+
+interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+interface AuthContextType {
+  auth: LoginResponse | null;
+  setAuth: (auth: LoginResponse | null) => void;
+}
+
 interface ExportDtoRequest {
-  id: number,
-  employeeId: number;
+  id: string | null,
+  employeeId: string;
   exportFormat: string;
   selectedEntities: string;
   appliedFilters: AppliedFilters;
@@ -47,4 +63,7 @@ export type {
   ExportDtoResponse,
   ValidExportFilterFields,
   AppliedFilters,
+  LoginResponse,
+  LoginRequest,
+  AuthContextType,
 };

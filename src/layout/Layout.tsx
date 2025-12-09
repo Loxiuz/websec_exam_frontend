@@ -1,12 +1,10 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { LayoutProps } from "../types";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MENU_ITEMS } from "../constants/menuItems";
 import "./Layout.css";
 
-export default function Layout({ children }: Readonly<LayoutProps>) {
+export default function Layout() {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const { employeeId } = useParams();
 
   function renderMenuList(path: string, label: string) {
     if (pathname === path) {
@@ -37,18 +35,18 @@ export default function Layout({ children }: Readonly<LayoutProps>) {
     }
   }
 
-  if (!employeeId) return null;
-
   return (
     <div id="layout">
       <nav id="menuBar">
         <ul>
           {MENU_ITEMS.map(([path, label]) => {
-            return renderMenuList(`/${employeeId}${path}`, label);
+            return renderMenuList(`${path}`, label);
           })}
         </ul>
       </nav>
-      <div id="content">{children}</div>
+      <div id="content">
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -4,6 +4,6 @@ export const MENU_ITEMS: string[][] = [
   ["/flight-schedules", "Flight Schedules"],
   ["/cargo-tracking", "Cargo Tracking"],
   ["/warehouse", "Warehouse"],
-  ["/users", "Users"],
+  ["/user", "User"],
   ["/settings", "Settings"],
 ];
