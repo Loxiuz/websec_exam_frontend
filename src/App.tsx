@@ -9,6 +9,7 @@ import ExportPage from "./export/ExportPage";
 import Layout from "./layout/Layout";
 import LoginPage from "./login/LoginPage";
 import RequireAuth from "./auth/RequireAuth";
+import UserPage from "./user/UserPage";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <Route path="flight-schedules" element={<h1>Flight Schedules</h1>} />
           <Route path="cargo-tracking" element={<h1>Cargo Tracking</h1>} />
           <Route path="warehouse" element={<h1>Warehouse</h1>} />
-          <Route path="user" element={<h1>User</h1>} />
+          <Route path="user" element={<UserPage />} />
           <Route path="settings" element={<h1>Settings</h1>} />
           <Route path="unauthorized" element={<h1>Unauthorized</h1>} />
           <Route path="*" element={<Navigate to="export" />} />

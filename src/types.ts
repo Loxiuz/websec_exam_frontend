@@ -5,6 +5,7 @@ interface LayoutProps {
 interface LoginResponse{
   role: string;
   employeeId: string;
+  username: string;
 }
 
 interface LoginRequest {

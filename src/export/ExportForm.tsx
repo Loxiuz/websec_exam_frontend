@@ -234,7 +234,7 @@ export default function ExportForm() {
           </label>
         </div>
         <div id="export-btn-container">
-          <input type="submit" id="export-btn" value="Confirm Export" />
+          <input type="submit" id="submit-btn" value="Confirm Export" />
         </div>
       </form>
     </div>
