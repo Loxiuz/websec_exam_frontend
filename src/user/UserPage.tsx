@@ -70,13 +70,19 @@ export default function UserPage() {
                     </form>
                 </div>
                 <div id="employee-id-container" className="user-ingo-item">
-                    <span>Employee ID: </span>
+                    <p>Employee ID: {formData.employeeId && (
+                        <span>{formData.employeeId}</span>
+                    )}</p>
                 </div>
                 <div id="username-container" className="user-ingo-item">
-                    <span>Username: </span>
+                    <p>Username: {formData.username && (
+                        <span>{formData.username}</span>
+                    )}</p>
                 </div>
                 <div id="role-container" className="user-ingo-item">
-                    <span>Role: </span>
+                    <p>Role: {formData.role && (
+                        <span>{formData.role.split("_")[1]}</span>
+                    )}</p>
                 </div>
             </div>
         </div>
