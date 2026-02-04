@@ -4,6 +4,10 @@
     gap: 10px;
 }
 
+.user-info-item span {
+    font-weight: bold;
+}
+
 #img-container {
     display: grid;
     grid-template-rows: 1fr;

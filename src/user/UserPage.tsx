@@ -69,17 +69,17 @@ export default function UserPage() {
                         <input type="submit" id="edit-img-btn" value="Upload" />
                     </form>
                 </div>
-                <div id="employee-id-container" className="user-ingo-item">
+                <div id="employee-id-container" className="user-info-item">
                     <p>Employee ID: {formData.employeeId && (
                         <span>{formData.employeeId}</span>
                     )}</p>
                 </div>
-                <div id="username-container" className="user-ingo-item">
+                <div id="username-container" className="user-info-item">
                     <p>Username: {formData.username && (
                         <span>{formData.username}</span>
                     )}</p>
                 </div>
-                <div id="role-container" className="user-ingo-item">
+                <div id="role-container" className="user-info-item">
                     <p>Role: {formData.role && (
                         <span>{formData.role.split("_")[1]}</span>
                     )}</p>
