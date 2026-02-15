@@ -1,6 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MENU_ITEMS } from "../constants/menuItems";
 import "./Layout.css";
+import { logout } from "../api/authApi";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -35,10 +36,28 @@ export default function Layout() {
     }
   }
 
+  async function handleLogout() {
+    const response = await logout();
+    if (response.message) {
+      localStorage.clear();
+      navigate("/login");
+      globalThis.location.reload();
+    } else {
+      alert("Logout failed. Please try again.");
+    }
+  }
+
   return (
     <div id="layout">
       <nav id="menuBar">
         <ul>
+          <li key={"logout"}>
+            <button onClick={
+              async () => {
+                await handleLogout();
+              }
+            }>Logout</button>
+          </li>
           {MENU_ITEMS.map(([path, label]) => {
             return renderMenuList(`${path}`, label);
           })}

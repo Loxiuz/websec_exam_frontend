@@ -1,5 +1,5 @@
 import { API_URL } from "../constants/settings";
-import type {LoginResponse, LoginRequest, IsLoggedInResponse } from "../types";
+import type {LoginResponse, LoginRequest, IsLoggedInResponse, LogoutResponse } from "../types";
 
 const authUrl = `${API_URL}/auth`;
 
@@ -18,6 +18,19 @@ async function login(login: LoginRequest): Promise<LoginResponse> {
   return await response.json() as LoginResponse;
 }
 
+async function logout(): Promise<LogoutResponse> {
+    const response = await fetch(authUrl + "/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      alert("Logout failed. Please try again.");
+    }
+    return await response.json() as LogoutResponse;
+  }
+
 async function isLoggedIn(): Promise<IsLoggedInResponse> {
     const Response = await fetch(authUrl + "/logged-in", {
       method: "GET",
@@ -28,12 +41,10 @@ async function isLoggedIn(): Promise<IsLoggedInResponse> {
 
     if (!Response.ok) {
         throw new Error("Failed to verify login status.");
-    }
+    } 
 
-    const json = await Response.json() as IsLoggedInResponse
-
-    return json;
+    return await Response.json() as IsLoggedInResponse;
     
 }
 
-export { login, isLoggedIn };
+export { login, logout, isLoggedIn };

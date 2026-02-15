@@ -13,6 +13,10 @@ interface LoginRequest {
   password: string;
 }
 
+interface LogoutResponse {
+  message: string;
+}
+
 interface IsLoggedInResponse {
   loggedIn: boolean;
 }
@@ -70,5 +74,6 @@ export type {
   LoginResponse,
   LoginRequest,
   AuthContextType,
-  IsLoggedInResponse
+  IsLoggedInResponse,
+  LogoutResponse
 };
