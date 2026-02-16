@@ -21,11 +21,31 @@ function App() {
             <Layout />
           </RequireAuth>
         }>
-          <Route path="export" element={<ExportPage />} />
-          <Route path="import" element={<h1>Import</h1>} />
-          <Route path="flight-schedules" element={<h1>Flight Schedules</h1>} />
-          <Route path="cargo-tracking" element={<h1>Cargo Tracking</h1>} />
-          <Route path="warehouse" element={<h1>Warehouse</h1>} />
+          <Route path="export" element={
+            <RequireAuth allowedRoles={["ROLE_ADMIN"]}>
+              <ExportPage />
+            </RequireAuth>
+          } />
+          <Route path="import" element={
+            <RequireAuth allowedRoles={["ROLE_ADMIN"]}>
+              <h1>Import</h1>
+            </RequireAuth>
+          } />
+          <Route path="flight-schedules" element={
+            <RequireAuth allowedRoles={["ROLE_ADMIN"]}>
+              <h1>Flight Schedules</h1>
+            </RequireAuth>
+          } />
+          <Route path="cargo-tracking" element={
+            <RequireAuth allowedRoles={["ROLE_ADMIN"]}>
+              <h1>Cargo Tracking</h1>
+            </RequireAuth>
+          } />
+          <Route path="warehouse" element={
+            <RequireAuth allowedRoles={["ROLE_ADMIN"]}>
+              <h1>Warehouse</h1>
+            </RequireAuth>
+          } />
           <Route path="user" element={<UserPage />} />
           <Route path="settings" element={<h1>Settings</h1>} />
           <Route path="unauthorized" element={<h1>Unauthorized</h1>} />
