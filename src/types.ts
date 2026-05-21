@@ -2,7 +2,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-interface LoginResponse{
+interface LoginResponse {
   role: string;
   employeeId: string;
   username: string;
@@ -27,7 +27,7 @@ interface AuthContextType {
 }
 
 interface ExportDtoRequest {
-  id: string | null,
+  id: string | null;
   employeeId: string;
   exportFormat: string;
   selectedEntities: string;
@@ -45,6 +45,13 @@ interface ExportDtoResponse {
   fileName: string;
   status: "PENDING" | "COMPLETED" | "FAILED";
   fileSize?: number;
+}
+
+interface ExportNotes {
+  id: number;
+  exportRequestId: number;
+  employeeId: number;
+  notes: string;
 }
 
 /* Filter structure for export request body */
@@ -75,5 +82,6 @@ export type {
   LoginRequest,
   AuthContextType,
   IsLoggedInResponse,
-  LogoutResponse
+  LogoutResponse,
+  ExportNotes,
 };

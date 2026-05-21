@@ -1,10 +1,14 @@
 import { API_URL } from "../constants/settings";
-import type {ExportDtoRequest, ExportDtoResponse} from "../types";
+import type {
+  ExportDtoRequest,
+  ExportDtoResponse,
+  ExportNotes,
+} from "../types";
 
 const exportUrl = `${API_URL}/export`;
 
 async function createExportRequest(
-  exportRequestDTO: ExportDtoRequest
+  exportRequestDTO: ExportDtoRequest,
 ): Promise<boolean> {
   const response = await fetch(exportUrl, {
     method: "POST",
@@ -37,6 +41,59 @@ async function getAllExportRequests(): Promise<ExportDtoResponse[]> {
   return response.json();
 }
 
+async function createExportNotes(
+  exportNotes: ExportNotes,
+): Promise<ExportNotes> {
+  const response = await fetch(`${API_URL}/export-notes/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(exportNotes),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create export note.");
+  }
+
+  return response.json();
+}
+
+async function getExportNotesByExportRequestId(
+  exportRequestId: number,
+): Promise<ExportNotes[]> {
+  const response = await fetch(
+    `${API_URL}/export-notes/exportRequest/${exportRequestId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch export notes.");
+  }
+
+  return response.json();
+}
+
+async function getAllExportNotes(): Promise<ExportNotes[]> {
+  const response = await fetch(`${API_URL}/notes/all`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch all export notes.");
+  }
+
+  return response.json();
+}
+
 async function downloadFile(response: Response, filename?: string) {
   const blob = await response.blob();
 
@@ -52,6 +109,10 @@ async function downloadFile(response: Response, filename?: string) {
   window.URL.revokeObjectURL(url);
 }
 
-
-
-export { createExportRequest, getAllExportRequests };
+export {
+  createExportRequest,
+  getAllExportRequests,
+  createExportNotes,
+  getExportNotesByExportRequestId,
+  getAllExportNotes,
+};
