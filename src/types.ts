@@ -48,10 +48,11 @@ interface ExportDtoResponse {
 }
 
 interface ExportNotes {
-  id: number;
-  exportRequestId: number;
-  employeeId: number;
+  id: string | null;
+  exportRequestId: string | null;
+  employeeId: string | null;
   notes: string;
+  creationDate: string;
 }
 
 /* Filter structure for export request body */
