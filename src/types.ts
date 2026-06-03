@@ -36,8 +36,8 @@ interface ExportDtoRequest {
 }
 
 interface ExportDtoResponse {
-  id: number;
-  employeeId: number;
+  id: string;
+  employeeId: string;
   exportFormat: string;
   exportCreation: string;
   selectedEntities: string;
@@ -47,12 +47,18 @@ interface ExportDtoResponse {
   fileSize?: number;
 }
 
-interface ExportNotes {
+interface ExportNote {
   id: string | null;
   exportRequestId: string | null;
   employeeId: string | null;
   notes: string;
   creationDate: string;
+}
+
+interface ExportNoteRequest {
+  exportRequestId: string;
+  employeeId: string;
+  notes: string;
 }
 
 /* Filter structure for export request body */
@@ -84,5 +90,6 @@ export type {
   AuthContextType,
   IsLoggedInResponse,
   LogoutResponse,
-  ExportNotes,
+  ExportNote as ExportNotes,
+  ExportNoteRequest,
 };

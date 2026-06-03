@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import type { ExportNotes } from "../types";
+import type { ExportNoteRequest, ExportNotes } from "../types";
 import "./ExportNotesDialog.css";
-import { getExportNotesByExportRequestId } from "../api/exportApi";
+import {
+  createExportNotes,
+  getExportNotesByExportRequestId,
+} from "../api/exportApi";
 
 export default function ExportNotesDialog({
   open,
@@ -13,6 +16,12 @@ export default function ExportNotesDialog({
   exportNotes: ExportNotes | null;
 }) {
   const [notesFromRequest, setNotesFromRequest] = useState<ExportNotes[]>([]);
+  const [addNoteForm, setAddNoteForm] = useState<ExportNoteRequest>({
+    exportRequestId: exportNotes?.exportRequestId || "",
+    employeeId: exportNotes?.employeeId || "",
+    notes: "",
+  });
+  const [addNoteFormOpen, setAddNoteFormOpen] = useState(false);
 
   useEffect(() => {
     async function fetchNotesFromRequest() {
@@ -25,30 +34,80 @@ export default function ExportNotesDialog({
     fetchNotesFromRequest();
   }, [exportNotes, setNotesFromRequest]);
 
+  function renderNoteForm() {
+    return (
+      <div id="add-note-form-container">
+        <h3>Add Note</h3>
+        <form id="add-note-form">
+          <textarea
+            id="add-note-textarea"
+            name="note"
+            value={addNoteForm.notes}
+            onChange={(e) =>
+              setAddNoteForm({ ...addNoteForm, notes: e.target.value })
+            }
+          ></textarea>
+          <button onClick={handleExportNotesSubmit}>Submit</button>
+        </form>
+      </div>
+    );
+  }
+
+  async function handleExportNotesSubmit() {
+    if (!addNoteForm.notes.trim()) {
+      alert("Note cannot be empty!");
+      return;
+    }
+
+    console.log("Submitting new note:", addNoteForm);
+
+    const response = await createExportNotes(addNoteForm);
+    if (response) {
+      alert(`Note ${response} added successfully!`);
+      setAddNoteFormOpen(false);
+    }
+  }
+
   return (
     <dialog open={open} id="export-notes-dialog">
       <div id="export-notes-container">
+        <h3>Notes for Request: {exportNotes?.exportRequestId || "N/A"}</h3>
         <table id="export-notes-dialog-table">
           <thead id="export-notes-dialog-header">
             <tr>
-              <th>
-                Notes for Request: {exportNotes?.exportRequestId || "N/A"}
-              </th>
+              <th>Employee</th>
+              <th>Notes</th>
             </tr>
           </thead>
           <tbody id="export-notes-dialog-body">
             {notesFromRequest.map((notes) => {
               return (
                 <tr key={notes.id}>
+                  <td>{notes.employeeId}</td>
                   <td>{notes.notes}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <button
+          onClick={() => {
+            setAddNoteFormOpen(true);
+          }}
+        >
+          Add
+        </button>
       </div>
-
-      <button onClick={onClose}>Close</button>
+      {addNoteFormOpen && renderNoteForm()}
+      <button
+        onClick={() => {
+          onClose();
+          setAddNoteForm({ ...addNoteForm, notes: "" });
+          setAddNoteFormOpen(false);
+        }}
+      >
+        Close
+      </button>
     </dialog>
   );
 }

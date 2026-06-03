@@ -42,9 +42,9 @@ async function getAllExportRequests(): Promise<ExportDtoResponse[]> {
 }
 
 async function createExportNotes(
-  exportNotes: ExportNotes,
+  exportNotes: ExportNoteRequest,
 ): Promise<ExportNotes> {
-  const response = await fetch(`${API_URL}/export-notes/create`, {
+  const response = await fetch(`${exportUrl}/notes/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
