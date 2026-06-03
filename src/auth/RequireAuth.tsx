@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-// import { isLoggedIn } from "../api/authApi";
+import { isLoggedIn } from "../api/authApi";
 
 export default function RequireAuth({
   allowedRoles,
@@ -20,11 +20,11 @@ export default function RequireAuth({
   //     } catch (error) {
   //       console.error("Error checking login status:", error);
   //     }
-  //   };
+  //   }
   //   checkStatus();
   // }, [setLoggedIn, loggedIn]);
 
-  //TODO: Remove hardcoded values when done developing
+  // TODO: Remove hardcoded values when done developing
   const loggedIn = true;
   const role = "ROLE_ADMIN";
 

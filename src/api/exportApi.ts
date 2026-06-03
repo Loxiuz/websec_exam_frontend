@@ -2,6 +2,7 @@ import { API_URL } from "../constants/settings";
 import type {
   ExportDtoRequest,
   ExportDtoResponse,
+  ExportNoteRequest,
   ExportNotes,
 } from "../types";
 
@@ -60,7 +61,7 @@ async function createExportNotes(
 }
 
 async function getExportNotesByExportRequestId(
-  exportRequestId: number,
+  exportRequestId: string,
 ): Promise<ExportNotes[]> {
   const response = await fetch(
     `${API_URL}/export-notes/exportRequest/${exportRequestId}`,

@@ -17,8 +17,8 @@ export default function ExportNotesDialog({
 }) {
   const [notesFromRequest, setNotesFromRequest] = useState<ExportNotes[]>([]);
   const [addNoteForm, setAddNoteForm] = useState<ExportNoteRequest>({
-    exportRequestId: exportNotes?.exportRequestId || "",
-    employeeId: exportNotes?.employeeId || "",
+    exportRequestId: "",
+    employeeId: "",
     notes: "",
   });
   const [addNoteFormOpen, setAddNoteFormOpen] = useState(false);
@@ -26,13 +26,25 @@ export default function ExportNotesDialog({
   useEffect(() => {
     async function fetchNotesFromRequest() {
       const requestId = exportNotes?.exportRequestId;
-      if (requestId) {
+      if (!requestId) {
+        setNotesFromRequest([]);
+        return;
+      }
+
+      try {
         const response = await getExportNotesByExportRequestId(requestId);
-        setNotesFromRequest(response);
+        setNotesFromRequest(response?.length ? response : []);
+        setAddNoteForm((previousForm) => ({
+          ...previousForm,
+          exportRequestId: requestId,
+          employeeId: exportNotes?.employeeId || "",
+        }));
+      } catch (error) {
+        console.error("Error fetching notes for export request:", error);
       }
     }
     fetchNotesFromRequest();
-  }, [exportNotes, setNotesFromRequest]);
+  }, [exportNotes]);
 
   function renderNoteForm() {
     return (
@@ -53,8 +65,11 @@ export default function ExportNotesDialog({
     );
   }
 
-  async function handleExportNotesSubmit() {
+  async function handleExportNotesSubmit(
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) {
     if (!addNoteForm.notes.trim()) {
+      e.preventDefault();
       alert("Note cannot be empty!");
       return;
     }

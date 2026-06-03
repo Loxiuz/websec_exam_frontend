@@ -29,10 +29,14 @@ export default function ExportRequestDashboard() {
     fetchExportRequests();
     const fetchNotes = async () => {
       if (selectedExportRequest) {
-        const notes = await getExportNotesByExportRequestId(
-          selectedExportRequest.id,
-        );
-        setSelectedExportRequestNotes(notes);
+        try {
+          const notes = await getExportNotesByExportRequestId(
+            selectedExportRequest.id,
+          );
+          setSelectedExportRequestNotes(notes);
+        } catch (error) {
+          console.error("Error fetching notes for export request:", error);
+        }
       }
     };
     fetchNotes();
