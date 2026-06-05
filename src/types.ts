@@ -2,12 +2,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-interface LoginResponse {
-  role: string;
-  employeeId: string;
-  username: string;
-}
-
 interface LoginRequest {
   username: string;
   password: string;
@@ -21,9 +15,9 @@ interface IsLoggedInResponse {
   loggedIn: boolean;
 }
 
-interface AuthContextType {
-  auth: LoginResponse | null;
-  setAuth: (auth: LoginResponse | null) => void;
+interface UserPermissionsResponse {
+  role: string;
+  permissions: string[];
 }
 
 interface ExportDtoRequest {
@@ -85,11 +79,10 @@ export type {
   ExportDtoResponse,
   ValidExportFilterFields,
   AppliedFilters,
-  LoginResponse,
   LoginRequest,
-  AuthContextType,
   IsLoggedInResponse,
   LogoutResponse,
   ExportNote as ExportNotes,
   ExportNoteRequest,
+  UserPermissionsResponse,
 };

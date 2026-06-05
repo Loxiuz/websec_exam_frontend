@@ -3,13 +3,11 @@ import type { AppliedFilters, ExportDtoRequest } from "../types";
 import { createExportRequest } from "../api/exportApi";
 import { VALID_EXPORT_FILTER_FIELDS } from "../constants/validFilterFieldsForEntities";
 import "./ExportForm.css";
-import ExportRequestDashboard from "../exportRequest/ExportRequestDashboard";
 
 export default function ExportForm() {
-
   const [formData, setFormData] = useState<ExportDtoRequest>({
     id: null,
-    employeeId: localStorage.getItem("employeeId") || "",
+    employeeId: "",
     exportFormat: "csv",
     selectedEntities: "",
     appliedFilters: [] as AppliedFilters,
@@ -41,12 +39,12 @@ export default function ExportForm() {
     setSelectedEntities((prev) =>
       prev.includes(entity)
         ? prev.filter((e) => e !== entity)
-        : [...prev, entity]
+        : [...prev, entity],
     );
     setSelectedEntitiesFilters((prev) =>
       isChecked
         ? [...prev, { [entity]: { field: "", value: "" } }]
-        : prev.filter((f) => !Object.keys(f)[0].includes(entity))
+        : prev.filter((f) => !Object.keys(f)[0].includes(entity)),
     );
   }
 
@@ -69,12 +67,12 @@ export default function ExportForm() {
 
   function renderFilterFieldRow(entity: string, i: number) {
     const filters = VALID_EXPORT_FILTER_FIELDS.find(
-      (f) => f.entity === entity
+      (f) => f.entity === entity,
     ) ?? { validFilterFields: [] };
 
     return (
       <div key={`${entity}-filter-row-${i}`} className="filter-row">
-        {filters.validFilterFields.length > 0 && (
+        {(filters.validFilterFields.length > 0 && (
           <>
             <select
               name={`${entity}-filters`}
@@ -97,7 +95,7 @@ export default function ExportForm() {
               value={selectedEntitiesFilters[i]?.[entity]?.value ?? ""}
             />
           </>
-        ) || (<span>Filters Unavailable</span>)}
+        )) || <span>Filters Unavailable</span>}
 
         <button
           id="remove-filter-btn"
@@ -112,49 +110,51 @@ export default function ExportForm() {
   function handleRemoveFilterBtnClick(
     e: React.MouseEvent<HTMLButtonElement>,
     i: number,
-    entity: string
+    entity: string,
   ) {
     e.preventDefault();
     setSelectedEntitiesFilters((prev) =>
-      prev.filter((f, index) => index !== i || !f[entity])
+      prev.filter((f, index) => index !== i || !f[entity]),
     );
   }
 
   function handleFilterValueChange(
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
-    entity: string
+    entity: string,
   ) {
     const value = e.target.value;
 
     setSelectedEntitiesFilters((prev) =>
       prev.map((f, i) =>
-        i === index && f[entity] ? { [entity]: { ...f[entity], value } } : f
-      )
+        i === index && f[entity] ? { [entity]: { ...f[entity], value } } : f,
+      ),
     );
   }
 
   function handleFilterSelectionChange(
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
-    entity: string
+    entity: string,
   ) {
     const field = e.target.value;
-    if (selectedEntitiesFilters.filter((f) => f[entity].field === field).length > 0) {
+    if (
+      selectedEntitiesFilters.filter((f) => f[entity].field === field).length >
+      0
+    ) {
       alert("you can only have one of each filter field per entity");
     } else {
       setSelectedEntitiesFilters((prev) =>
         prev.map((f, i) =>
-          i === index && f[entity] ? { [entity]: { ...f[entity], field } } : f
-        )
+          i === index && f[entity] ? { [entity]: { ...f[entity], field } } : f,
+        ),
       );
     }
-
   }
 
   function handleAddFilterBtnClick(
     e: React.MouseEvent<HTMLButtonElement>,
-    entity: string
+    entity: string,
   ) {
     e.preventDefault();
     setSelectedEntitiesFilters((prev) => [
@@ -165,7 +165,6 @@ export default function ExportForm() {
 
   return (
     <div id="export-form-container">
-      <ExportRequestDashboard />
       <h3>
         Export Entities <span>(employee: {formData.employeeId})</span>
       </h3>

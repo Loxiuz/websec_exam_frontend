@@ -39,7 +39,6 @@ export default function Layout() {
   async function handleLogout() {
     const response = await logout();
     if (response.message) {
-      localStorage.clear();
       navigate("/login");
       globalThis.location.reload();
     } else {
@@ -52,11 +51,13 @@ export default function Layout() {
       <nav id="menuBar">
         <ul>
           <li key={"logout"}>
-            <button onClick={
-              async () => {
+            <button
+              onClick={async () => {
                 await handleLogout();
-              }
-            }>Logout</button>
+              }}
+            >
+              Logout
+            </button>
           </li>
           {MENU_ITEMS.map(([path, label]) => {
             return renderMenuList(`${path}`, label);

@@ -4,9 +4,8 @@ import { getEmployeeImage, uploadImageToEmployee } from "../api/employeeApi";
 export default function UserPage() {
   const [formData, setFormData] = useState({
     image: null as File | null,
-    employeeId: localStorage.getItem("employeeId") || "",
-    username: localStorage.getItem("username") || "",
-    role: localStorage.getItem("role") || "",
+    employeeId: "",
+    username: "",
   });
 
   useEffect(() => {
@@ -79,11 +78,6 @@ export default function UserPage() {
         <div id="username-container" className="user-info-item">
           <p>
             Username: {formData.username && <span>{formData.username}</span>}
-          </p>
-        </div>
-        <div id="role-container" className="user-info-item">
-          <p>
-            Role: {formData.role && <span>{formData.role.split("_")[1]}</span>}
           </p>
         </div>
       </div>

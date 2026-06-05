@@ -63,15 +63,12 @@ async function createExportNotes(
 async function getExportNotesByExportRequestId(
   exportRequestId: string,
 ): Promise<ExportNotes[]> {
-  const response = await fetch(
-    `${API_URL}/export-notes/exportRequest/${exportRequestId}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const response = await fetch(`${exportUrl}/${exportRequestId}/notes`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch export notes.");
@@ -81,7 +78,7 @@ async function getExportNotesByExportRequestId(
 }
 
 async function getAllExportNotes(): Promise<ExportNotes[]> {
-  const response = await fetch(`${API_URL}/notes/all`, {
+  const response = await fetch(`${exportUrl}/notes/all`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

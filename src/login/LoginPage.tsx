@@ -22,9 +22,6 @@ export default function LoginPage() {
       setPassword("");
       return;
     }
-    for (const [key, value] of Object.entries(response)) {
-      localStorage.setItem(key, value);
-    }
     nav("/export");
   }
 
