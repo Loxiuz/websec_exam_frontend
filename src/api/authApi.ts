@@ -2,38 +2,52 @@ import { API_URL } from "../constants/settings";
 import type {
   LoginRequest,
   IsLoggedInResponse,
-  LogoutResponse,
   UserPermissionsResponse,
 } from "../types";
 
 const authUrl = `${API_URL}/auth`;
 
-async function login(login: LoginRequest): Promise<string> {
+async function login(login: LoginRequest): Promise<void> {
   const response = await fetch(authUrl + "/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(login),
   });
   if (!response.ok) {
     throw new Error("Login failed.");
   }
-
-  return await response.json();
 }
 
-async function logout(): Promise<LogoutResponse> {
+async function logout(): Promise<string> {
   const response = await fetch(authUrl + "/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
   if (!response.ok) {
-    alert("Logout failed. Please try again.");
+    throw new Error("Logout failed.");
   }
-  return await response.json();
+
+  return await response.text();
+}
+
+async function register(login: LoginRequest): Promise<void> {
+  const response = await fetch(authUrl + "/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(login),
+  });
+  if (!response.ok) {
+    throw new Error("Registration failed.");
+  }
 }
 
 async function isLoggedIn(): Promise<IsLoggedInResponse> {
@@ -42,6 +56,7 @@ async function isLoggedIn(): Promise<IsLoggedInResponse> {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!Response.ok) {
@@ -52,11 +67,12 @@ async function isLoggedIn(): Promise<IsLoggedInResponse> {
 }
 
 async function getCurrentUserPermissions(): Promise<UserPermissionsResponse> {
-  const response = await fetch(authUrl + "/permissions", {
+  const response = await fetch(authUrl + "/me/permissions", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -66,4 +82,4 @@ async function getCurrentUserPermissions(): Promise<UserPermissionsResponse> {
   return await response.json();
 }
 
-export { login, logout, isLoggedIn, getCurrentUserPermissions };
+export { login, logout, register, isLoggedIn, getCurrentUserPermissions };

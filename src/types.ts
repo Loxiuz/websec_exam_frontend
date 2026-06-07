@@ -7,10 +7,6 @@ interface LoginRequest {
   password: string;
 }
 
-interface LogoutResponse {
-  message: string;
-}
-
 interface IsLoggedInResponse {
   loggedIn: boolean;
 }
@@ -81,7 +77,6 @@ export type {
   AppliedFilters,
   LoginRequest,
   IsLoggedInResponse,
-  LogoutResponse,
   ExportNote as ExportNotes,
   ExportNoteRequest,
   UserPermissionsResponse,

@@ -37,11 +37,13 @@ export default function Layout() {
   }
 
   async function handleLogout() {
-    const response = await logout();
-    if (response.message) {
+    try {
+      await logout();
+      sessionStorage.removeItem("userPermissions");
       navigate("/login");
       globalThis.location.reload();
-    } else {
+    } catch (error) {
+      console.error("Logout failed:", error);
       alert("Logout failed. Please try again.");
     }
   }
