@@ -4,9 +4,11 @@ import { getCurrentUserPermissions, isLoggedIn } from "../api/authApi";
 
 export default function RequireAuth({
   permission,
+  redirectOnDeny = true,
   children,
 }: {
   permission?: string;
+  redirectOnDeny?: boolean;
   children: ReactNode;
 }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +45,9 @@ export default function RequireAuth({
           "userPermissions",
           JSON.stringify(userPermissionsResponse.permissions),
         );
-        setIsAuthorized(userPermissionsResponse.permissions.includes(permission));
+        setIsAuthorized(
+          userPermissionsResponse.permissions.includes(permission),
+        );
       } catch (error) {
         console.error("Error checking auth status:", error);
         setLoggedIn(false);
@@ -57,7 +61,9 @@ export default function RequireAuth({
 
   if (isLoading) return <div>Loading...</div>;
   if (!loggedIn) return <Navigate to="/login" />;
-  if (!isAuthorized) return <Navigate to="/unauthorized" />;
+  if (!isAuthorized) {
+    return redirectOnDeny ? <Navigate to="/unauthorized" /> : null;
+  }
 
   return children;
 }

@@ -80,6 +80,16 @@ async function getCurrentUserPermissions(): Promise<UserPermissionsResponse> {
   }
 
   return await response.json();
+  // return {
+  //   role: "ROLE_ADMIN",
+  //   permissions: [
+  //     "MANAGE_USERS",
+  //     "VIEW_EXPORTS",
+  //     "VIEW_NOTES",
+  //     "CREATE_EXPORT",
+  //     "CREATE_NOTES",
+  //   ],
+  // };
 }
 
 export { login, logout, register, isLoggedIn, getCurrentUserPermissions };

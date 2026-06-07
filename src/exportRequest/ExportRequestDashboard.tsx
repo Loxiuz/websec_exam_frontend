@@ -7,6 +7,7 @@ import {
 import "./ExportRequestDashboard.css";
 import DashboardAppliedFiltersDialog from "./DashboardAppliedFiltersDialog";
 import ExportNotesDialog from "../exportNotes/ExportNotesDialog";
+import RequireAuth from "../auth/RequireAuth";
 
 export default function ExportRequestDashboard() {
   const [exportRequests, setExportRequests] = useState<ExportDtoResponse[]>([]);
@@ -90,16 +91,18 @@ export default function ExportRequestDashboard() {
                   ...
                 </button>
               </td>
-              <td>
-                <button
-                  onClick={() => {
-                    setSelectedExportRequest(request);
-                    setNotesDialogOpen(true);
-                  }}
-                >
-                  ...
-                </button>
-              </td>
+              <RequireAuth permission="VIEW_NOTES" redirectOnDeny={false}>
+                <td>
+                  <button
+                    onClick={() => {
+                      setSelectedExportRequest(request);
+                      setNotesDialogOpen(true);
+                    }}
+                  >
+                    ...
+                  </button>
+                </td>
+              </RequireAuth>
             </tr>
           ))}
         </tbody>

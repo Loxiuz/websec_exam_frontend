@@ -40,10 +40,10 @@ function App() {
           />
           <Route path="user" element={<UserPage />} />
           <Route
-            path="settings" //TODO: Change to user management page when implemented
+            path="manage-users" //TODO: implmenent full user management page
             element={
               <RequireAuth permission="MANAGE_USERS">
-                <h1>Settings</h1>
+                <h1>Manage Users</h1>
               </RequireAuth>
             }
           />

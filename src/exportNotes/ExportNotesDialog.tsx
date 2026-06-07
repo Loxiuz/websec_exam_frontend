@@ -5,6 +5,7 @@ import {
   createExportNotes,
   getExportNotesByExportRequestId,
 } from "../api/exportApi";
+import RequireAuth from "../auth/RequireAuth";
 
 export default function ExportNotesDialog({
   open,
@@ -105,15 +106,19 @@ export default function ExportNotesDialog({
             })}
           </tbody>
         </table>
-        <button
-          onClick={() => {
-            setAddNoteFormOpen(true);
-          }}
-        >
-          Add
-        </button>
+        <RequireAuth permission="CREATE_NOTES" redirectOnDeny={false}>
+          <button
+            onClick={() => {
+              setAddNoteFormOpen(true);
+            }}
+          >
+            Add
+          </button>
+        </RequireAuth>
       </div>
-      {addNoteFormOpen && renderNoteForm()}
+      <RequireAuth permission="CREATE_NOTES" redirectOnDeny={false}>
+        {addNoteFormOpen && renderNoteForm()}
+      </RequireAuth>
       <button
         onClick={() => {
           onClose();
