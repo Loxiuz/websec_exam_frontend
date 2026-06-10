@@ -42,6 +42,23 @@ async function getAllExportRequests(): Promise<ExportDtoResponse[]> {
   return response.json();
 }
 
+async function getExportRequestByEmployeeId(
+  employeeId: string,
+): Promise<ExportDtoResponse[]> {
+  const response = await fetch(`${exportUrl}/all-requests/${employeeId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch export requests by employee id.");
+  }
+
+  return response.json();
+}
+
 async function createExportNotes(
   exportNotes: ExportNoteRequest,
 ): Promise<ExportNotes> {
@@ -74,21 +91,6 @@ async function getExportNotesByExportRequestId(
     throw new Error("Failed to fetch export notes.");
   }
 
-  return response.json();
-}
-
-async function getExportNotesbyEmployeeId(
-  employeeId: string,
-): Promise<ExportNotes[]> {
-  const response = await fetch(`${exportUrl}/notes/all/${employeeId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch export notes by employee id.");
-  }
   return response.json();
 }
 
@@ -128,5 +130,5 @@ export {
   createExportNotes,
   getExportNotesByExportRequestId,
   getAllExportNotes,
-  getExportNotesbyEmployeeId,
+  getExportRequestByEmployeeId,
 };

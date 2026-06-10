@@ -69,18 +69,17 @@ export default function ExportNotesDialog({
   async function handleExportNotesSubmit(
     e: React.MouseEvent<HTMLButtonElement>,
   ) {
+    e.preventDefault();
     if (!addNoteForm.notes.trim()) {
-      e.preventDefault();
       alert("Note cannot be empty!");
       return;
     }
-
-    console.log("Submitting new note:", addNoteForm);
 
     const response = await createExportNotes(addNoteForm);
     if (response) {
       alert(`Note ${response} added successfully!`);
       setAddNoteFormOpen(false);
+      globalThis.location.reload();
     }
   }
 

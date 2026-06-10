@@ -1,0 +1,34 @@
+#user-management-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+#user-management-table td {
+  border: 2px solid #3b3b3b;
+  text-align: center;
+}
+
+#user-management-table button {
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#user-management-table-header {
+  background-color: #3b3b3b;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+#user-management-table-header th {
+  padding: 10px;
+  border-bottom: 2px solid #3b3b3b;
+}
+
+#user-management-table-body {
+  background-color: #ffffff;
+}

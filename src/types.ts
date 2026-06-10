@@ -39,6 +39,14 @@ interface ExportDtoResponse {
   fileSize?: number;
 }
 
+interface AdminUserEmployeeResponse {
+  name: string;
+  username: string;
+  email: string;
+  role: string;
+  employeeId: string;
+}
+
 interface ExportNote {
   id: string | null;
   exportRequestId: string | null;
@@ -82,4 +90,5 @@ export type {
   ExportNote as ExportNotes,
   ExportNoteRequest,
   UserPermissionsResponse,
+  AdminUserEmployeeResponse,
 };

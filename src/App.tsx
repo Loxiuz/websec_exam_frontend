@@ -7,6 +7,7 @@ import UserPage from "./user/UserPage";
 import ExportNotesPage from "./exportNotes/ExportNotesPage";
 import RegisterPage from "./auth/RegisterPage";
 import RequireAuth from "./auth/RequireAuth";
+import UserManagementPage from "./userManagement/UserManagementPage";
 
 function App() {
   return (
@@ -50,7 +51,7 @@ function App() {
             path="manage-users" //TODO: implmenent full user management page
             element={
               <RequireAuth permission="MANAGE_USERS">
-                <h1>Manage Users</h1>
+                <UserManagementPage />
               </RequireAuth>
             }
           />

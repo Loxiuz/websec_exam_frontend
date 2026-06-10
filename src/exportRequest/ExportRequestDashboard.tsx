@@ -7,7 +7,7 @@ import {
 import "./ExportRequestDashboard.css";
 import DashboardAppliedFiltersDialog from "./DashboardAppliedFiltersDialog";
 import ExportNotesDialog from "../exportNotes/ExportNotesDialog";
-import RequireAuth from "../auth/RequireAuth";
+import ExportRequestTable from "./ExportRequestTable";
 
 export default function ExportRequestDashboard() {
   const [exportRequests, setExportRequests] = useState<ExportDtoResponse[]>([]);
@@ -43,70 +43,15 @@ export default function ExportRequestDashboard() {
     fetchNotes();
   }, [selectedExportRequest]);
 
-  function createDateString(dateString: string): string {
-    const date = new Date(dateString);
-
-    const timeWithoutSeconds = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    return date.toLocaleDateString() + " | " + timeWithoutSeconds;
-  }
-
   return (
     <div id="dashboard-container">
       <h1>Export Activity</h1>
-      <table id="dashboard-table">
-        <thead id="dashboard-header">
-          <tr>
-            <th>Employee ID </th>
-            <th>Format</th>
-            <th>Creation</th>
-            <th>Entities</th>
-            <th>Filename</th>
-            <th>Status</th>
-            <th>Size (KB)</th>
-            <th>Filters</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody id="dashboard-body">
-          {exportRequests.map((request) => (
-            <tr key={request.id}>
-              <td>{request.employeeId}</td>
-              <td>{request.exportFormat}</td>
-              <td>{createDateString(request.exportCreation)}</td>
-              <td>{request.selectedEntities}</td>
-              <td>{request.fileName}</td>
-              <td>{request.status}</td>
-              <td>{request.fileSize ?? "N/A"}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    setSelectedExportRequest(request);
-                    setDialogOpen(true);
-                  }}
-                >
-                  ...
-                </button>
-              </td>
-              <RequireAuth permission="VIEW_NOTES" redirectOnDeny={false}>
-                <td>
-                  <button
-                    onClick={() => {
-                      setSelectedExportRequest(request);
-                      setNotesDialogOpen(true);
-                    }}
-                  >
-                    ...
-                  </button>
-                </td>
-              </RequireAuth>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ExportRequestTable
+        exportRequests={exportRequests}
+        setSelectedExportRequest={setSelectedExportRequest}
+        setDialogOpen={setDialogOpen}
+        setNotesDialogOpen={setNotesDialogOpen}
+      />
 
       <dialog open={filtersDialogOpen} id="applied-filters-dialog">
         <DashboardAppliedFiltersDialog
