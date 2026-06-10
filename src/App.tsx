@@ -38,7 +38,14 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="user" element={<UserPage />} />
+          <Route
+            path="user"
+            element={
+              <RequireAuth>
+                <UserPage />
+              </RequireAuth>
+            }
+          />
           <Route
             path="manage-users" //TODO: implmenent full user management page
             element={

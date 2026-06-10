@@ -34,7 +34,16 @@ export default function RequireAuth({
         }
 
         const cachedPermissions = sessionStorage.getItem("userPermissions");
-        if (cachedPermissions) {
+        const cachedUsername = sessionStorage.getItem("username");
+        const cachedRole = sessionStorage.getItem("role");
+        const cachedEmployeeId = sessionStorage.getItem("employeeId");
+
+        if (
+          cachedPermissions &&
+          cachedUsername &&
+          cachedRole &&
+          cachedEmployeeId
+        ) {
           const permissions = JSON.parse(cachedPermissions) as string[];
           setIsAuthorized(permissions.includes(permission));
           return;
@@ -45,6 +54,13 @@ export default function RequireAuth({
           "userPermissions",
           JSON.stringify(userPermissionsResponse.permissions),
         );
+        sessionStorage.setItem("username", userPermissionsResponse.username);
+        sessionStorage.setItem("role", userPermissionsResponse.role);
+        sessionStorage.setItem(
+          "employeeId",
+          userPermissionsResponse.employeeId,
+        );
+
         setIsAuthorized(
           userPermissionsResponse.permissions.includes(permission),
         );
@@ -56,6 +72,7 @@ export default function RequireAuth({
         setIsLoading(false);
       }
     }
+
     checkStatusAndPermission();
   }, [permission]);
 

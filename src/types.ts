@@ -13,6 +13,8 @@ interface IsLoggedInResponse {
 
 interface UserPermissionsResponse {
   role: string;
+  username: string;
+  employeeId: string;
   permissions: string[];
 }
 

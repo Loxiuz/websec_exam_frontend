@@ -22,6 +22,9 @@ export default function LoginPage() {
         "userPermissions",
         JSON.stringify(userPermissions.permissions),
       );
+      sessionStorage.setItem("username", userPermissions.username);
+      sessionStorage.setItem("role", userPermissions.role);
+      sessionStorage.setItem("employeeId", userPermissions.employeeId);
       nav("/export");
     } catch (error) {
       console.error("Login failed:", error);

@@ -3,11 +3,12 @@ import type { AppliedFilters, ExportDtoRequest } from "../types";
 import { createExportRequest } from "../api/exportApi";
 import { VALID_EXPORT_FILTER_FIELDS } from "../constants/validFilterFieldsForEntities";
 import "./ExportForm.css";
+import readSessionString from "../auth/ReadSessionString";
 
 export default function ExportForm() {
   const [formData, setFormData] = useState<ExportDtoRequest>({
     id: null,
-    employeeId: "",
+    employeeId: readSessionString("employeeId") || "",
     exportFormat: "csv",
     selectedEntities: "",
     appliedFilters: [] as AppliedFilters,

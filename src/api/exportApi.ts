@@ -77,6 +77,21 @@ async function getExportNotesByExportRequestId(
   return response.json();
 }
 
+async function getExportNotesbyEmployeeId(
+  employeeId: string,
+): Promise<ExportNotes[]> {
+  const response = await fetch(`${exportUrl}/notes/all/${employeeId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch export notes by employee id.");
+  }
+  return response.json();
+}
+
 async function getAllExportNotes(): Promise<ExportNotes[]> {
   const response = await fetch(`${exportUrl}/notes/all`, {
     method: "GET",
@@ -113,4 +128,5 @@ export {
   createExportNotes,
   getExportNotesByExportRequestId,
   getAllExportNotes,
+  getExportNotesbyEmployeeId,
 };

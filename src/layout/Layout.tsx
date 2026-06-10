@@ -2,10 +2,12 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MENU_ITEMS } from "../constants/menuItems";
 import "./Layout.css";
 import { logout } from "../api/authApi";
+import readSessionString from "../auth/ReadSessionString";
 
 export default function Layout() {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
+  const username = readSessionString("username");
 
   function renderMenuList(path: string, label: string) {
     if (pathname === path) {
@@ -40,6 +42,9 @@ export default function Layout() {
     try {
       await logout();
       sessionStorage.removeItem("userPermissions");
+      sessionStorage.removeItem("username");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("employeeId");
       navigate("/login");
       globalThis.location.reload();
     } catch (error) {
@@ -52,6 +57,9 @@ export default function Layout() {
     <div id="layout">
       <nav id="menuBar">
         <ul>
+          <li>
+            <p>Logged in as: {username}</p>
+          </li>
           <li key={"logout"}>
             <button
               onClick={async () => {
