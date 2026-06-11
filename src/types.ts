@@ -55,6 +55,10 @@ interface ExportNote {
   creationDate: string;
 }
 
+interface IsHiddenDto {
+  isHidden: boolean;
+}
+
 interface ExportNoteRequest {
   exportRequestId: string;
   employeeId: string;
@@ -91,4 +95,5 @@ export type {
   ExportNoteRequest,
   UserPermissionsResponse,
   AdminUserEmployeeResponse,
+  IsHiddenDto,
 };

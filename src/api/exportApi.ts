@@ -4,6 +4,7 @@ import type {
   ExportDtoResponse,
   ExportNoteRequest,
   ExportNotes,
+  IsHiddenDto,
 } from "../types";
 
 const exportUrl = `${API_URL}/export`;
@@ -16,6 +17,7 @@ async function createExportRequest(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(exportRequestDTO),
   });
 
@@ -33,6 +35,7 @@ async function getAllExportRequests(): Promise<ExportDtoResponse[]> {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -50,6 +53,7 @@ async function getExportRequestByEmployeeId(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -67,6 +71,7 @@ async function createExportNotes(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(exportNotes),
   });
 
@@ -85,6 +90,7 @@ async function getExportNotesByExportRequestId(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -100,10 +106,42 @@ async function getAllExportNotes(): Promise<ExportNotes[]> {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
     throw new Error("Failed to fetch all export notes.");
+  }
+
+  return response.json();
+}
+
+async function setExportNotesHidden(exportNoteId: string, isHidden: boolean) {
+  const response = await fetch(`${exportUrl}/notes/${exportNoteId}/hidden`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ isHidden: isHidden }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update export note visibility.");
+  }
+}
+
+async function isExportNotesHidden(exportNoteId: string): Promise<IsHiddenDto> {
+  const response = await fetch(`${exportUrl}/notes/${exportNoteId}/is-hidden`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch export note visibility.");
   }
 
   return response.json();
@@ -131,4 +169,6 @@ export {
   getExportNotesByExportRequestId,
   getAllExportNotes,
   getExportRequestByEmployeeId,
+  setExportNotesHidden,
+  isExportNotesHidden,
 };
