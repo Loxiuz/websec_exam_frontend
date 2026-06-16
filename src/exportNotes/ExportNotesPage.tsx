@@ -157,30 +157,36 @@ export default function ExportNotesPage() {
                   </td>
                   {onlyMyNotes && (
                     <td>
-                      <label>visible</label>
-                      <input
-                        type="radio"
-                        name={`visibility-${noteId ?? "missing-id"}`}
-                        value="show"
-                        data-note-id={noteId ?? undefined}
-                        checked={
-                          noteId ? hiddenByNoteId[noteId] === false : false
-                        }
-                        disabled={!noteId}
-                        onChange={handleRadioChange}
-                      />
-                      <label>hidden</label>
-                      <input
-                        type="radio"
-                        name={`visibility-${noteId ?? "missing-id"}`}
-                        value="hide"
-                        data-note-id={noteId ?? undefined}
-                        checked={
-                          noteId ? hiddenByNoteId[noteId] === true : false
-                        }
-                        disabled={!noteId}
-                        onChange={handleRadioChange}
-                      />
+                      <div className="radio-group">
+                        <label className="radio-label">
+                          <input
+                            type="radio"
+                            name={`visibility-${noteId ?? "missing-id"}`}
+                            value="show"
+                            data-note-id={noteId ?? undefined}
+                            checked={
+                              noteId ? hiddenByNoteId[noteId] === false : false
+                            }
+                            disabled={!noteId}
+                            onChange={handleRadioChange}
+                          />
+                          Visible
+                        </label>
+                        <label className="radio-label">
+                          <input
+                            type="radio"
+                            name={`visibility-${noteId ?? "missing-id"}`}
+                            value="hide"
+                            data-note-id={noteId ?? undefined}
+                            checked={
+                              noteId ? hiddenByNoteId[noteId] === true : false
+                            }
+                            disabled={!noteId}
+                            onChange={handleRadioChange}
+                          />
+                          Hidden
+                        </label>
+                      </div>
                     </td>
                   )}
                 </tr>

@@ -62,7 +62,10 @@ export default function ExportRequestDashboard() {
       </dialog>
       <ExportNotesDialog
         open={notesDialogOpen}
-        onClose={() => setNotesDialogOpen(false)}
+        onClose={() => {
+          setNotesDialogOpen(false)
+          setSelectedExportRequestNotes(undefined);
+        }}
         exportNotes={
           selectedExportRequestNotes ? selectedExportRequestNotes[0] : null
         }

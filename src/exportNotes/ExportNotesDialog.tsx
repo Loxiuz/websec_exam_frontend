@@ -77,7 +77,7 @@ export default function ExportNotesDialog({
 
     const response = await createExportNotes(addNoteForm);
     if (response) {
-      alert(`Note ${response} added successfully!`);
+      alert(`Note added successfully!`);
       setAddNoteFormOpen(false);
       globalThis.location.reload();
     }
