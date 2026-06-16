@@ -100,7 +100,7 @@ export default function ExportForm() {
 
         <button
           id="remove-filter-btn"
-          onClick={(e) => handleRemoveFilterBtnClick(e, i, entity)}
+          onClick={(e) => handleRemoveFilterBtnClick(e, i)}
         >
           X
         </button>
@@ -111,11 +111,9 @@ export default function ExportForm() {
   function handleRemoveFilterBtnClick(
     e: React.MouseEvent<HTMLButtonElement>,
     i: number,
-    entity: string,
   ) {
     e.preventDefault();
-    setSelectedEntitiesFilters((prev) =>
-      prev.filter((f, index) => index !== i || !f[entity]),
+    setSelectedEntitiesFilters((prev) => prev.filter((_, index) => index !== i)
     );
   }
 
@@ -140,8 +138,7 @@ export default function ExportForm() {
   ) {
     const field = e.target.value;
     if (
-      selectedEntitiesFilters.filter((f) => f[entity].field === field).length >
-      0
+      selectedEntitiesFilters.some((f) => f[entity].field === field)
     ) {
       alert("you can only have one of each filter field per entity");
     } else {

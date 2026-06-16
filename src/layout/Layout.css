@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #c4c4c4;
+}
+
 #layout {
   display: flex;
   background-color: #c4c4c4;
@@ -52,4 +58,6 @@ button:hover {
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
+  height: 100%;
+  width: 100%;
 }
