@@ -133,7 +133,7 @@ export default function UserPage() {
         <div id="employee-id-container" className="user-info-item">
           <p>
             Employee ID:{" "}
-            {employeeId && <span>{employeeId ? employeeId : "N/A"}</span>}
+            {employeeId && <span>{employeeId || "N/A"}</span>}
           </p>
         </div>
       </div>
@@ -144,20 +144,22 @@ export default function UserPage() {
         setDialogOpen={setFiltersDialogOpen}
         setNotesDialogOpen={setNotesDialogOpen}
       />
-      <dialog open={filtersDialogOpen} id="applied-filters-dialog">
-        <DashboardAppliedFiltersDialog
-          appliedFilters={selectedExportRequest?.appliedFilters || []}
-          exportRequestId={selectedExportRequest?.id}
+      <div id="dialogs-container">
+        <dialog open={filtersDialogOpen} id="applied-filters-dialog">
+          <DashboardAppliedFiltersDialog
+            appliedFilters={selectedExportRequest?.appliedFilters || []}
+            exportRequestId={selectedExportRequest?.id}
+          />
+          <button onClick={() => setFiltersDialogOpen(false)}>Close</button>
+        </dialog>
+        <ExportNotesDialog
+          open={notesDialogOpen}
+          onClose={() => setNotesDialogOpen(false)}
+          exportNotes={
+            selectedExportRequestNotes ? selectedExportRequestNotes[0] : null
+          }
         />
-        <button onClick={() => setFiltersDialogOpen(false)}>Close</button>
-      </dialog>
-      <ExportNotesDialog
-        open={notesDialogOpen}
-        onClose={() => setNotesDialogOpen(false)}
-        exportNotes={
-          selectedExportRequestNotes ? selectedExportRequestNotes[0] : null
-        }
-      />
+      </div>
     </div>
   );
 }
