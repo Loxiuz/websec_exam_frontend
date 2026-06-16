@@ -1,4 +1,5 @@
 import { API_URL } from "../constants/settings";
+import { csrfHeaders } from "./authApi";
 
 const employeeUrl = `${API_URL}/employees`;
 
@@ -10,6 +11,9 @@ async function uploadImageToEmployee(
   imageFormData.append("file", imageFile);
   const response = await fetch(`${employeeUrl}/${employeeId}/upload-image`, {
     method: "POST",
+    headers: {
+      ...csrfHeaders(),
+    },
     body: imageFormData,
     credentials: "include",
   });

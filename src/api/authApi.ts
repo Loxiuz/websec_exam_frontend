@@ -12,6 +12,7 @@ async function login(login: LoginRequest): Promise<void> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...csrfHeaders(),
     },
     credentials: "include",
     body: JSON.stringify(login),
@@ -41,6 +42,7 @@ async function register(login: LoginRequest): Promise<void> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...csrfHeaders(),
     },
     credentials: "include",
     body: JSON.stringify(login),
@@ -92,4 +94,14 @@ async function getCurrentUserPermissions(): Promise<UserPermissionsResponse> {
   // };
 }
 
-export { login, logout, register, isLoggedIn, getCurrentUserPermissions };
+function getCookie(name: string): string | null {
+  const match = new RegExp(`(?:^|; )${name}=([^;]*)`).exec(document.cookie);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function csrfHeaders(): Record<string, string> {
+  const token = getCookie("csrfToken");
+  return token ? { "X-CSRF-Token": token } : {};
+}
+
+export { login, logout, register, isLoggedIn, getCurrentUserPermissions, csrfHeaders };

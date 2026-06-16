@@ -6,6 +6,7 @@ import type {
   ExportNotes,
   IsHiddenDto,
 } from "../types";
+import { csrfHeaders } from "./authApi";
 
 const exportUrl = `${API_URL}/export`;
 
@@ -16,6 +17,7 @@ async function createExportRequest(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...csrfHeaders(),
     },
     credentials: "include",
     body: JSON.stringify(exportRequestDTO),
@@ -70,6 +72,7 @@ async function createExportNotes(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...csrfHeaders(),
     },
     credentials: "include",
     body: JSON.stringify(exportNotes),
@@ -172,3 +175,5 @@ export {
   setExportNotesHidden,
   isExportNotesHidden,
 };
+
+

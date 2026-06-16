@@ -125,9 +125,14 @@ export default function ExportForm() {
     const value = e.target.value;
 
     setSelectedEntitiesFilters((prev) =>
-      prev.map((f, i) =>
-        i === index && f[entity] ? { [entity]: { ...f[entity], value } } : f,
-      ),
+      prev.map((f, i) => {
+        const key = Object.keys(f)[0];
+        if (i === index && key === entity) {
+          const existing = (f)[key] ?? { field: "", value: "" };
+          return { [entity]: { ...existing, value } };
+        }
+        return f;
+      }),
     );
   }
 
@@ -137,17 +142,28 @@ export default function ExportForm() {
     entity: string,
   ) {
     const field = e.target.value;
-    if (
-      selectedEntitiesFilters.some((f) => f[entity].field === field)
-    ) {
+
+    // check duplicates only for filters of the same entity
+    const duplicate = selectedEntitiesFilters.some((f) => {
+      const key = Object.keys(f)[0];
+      return key === entity && (f)[key]?.field === field && field !== "";
+    });
+
+    if (duplicate) {
       alert("you can only have one of each filter field per entity");
-    } else {
-      setSelectedEntitiesFilters((prev) =>
-        prev.map((f, i) =>
-          i === index && f[entity] ? { [entity]: { ...f[entity], field } } : f,
-        ),
-      );
+      return;
     }
+
+    setSelectedEntitiesFilters((prev) =>
+      prev.map((f, i) => {
+        const key = Object.keys(f)[0];
+        if (i === index && key === entity) {
+          const existing = (f)[key] ?? { field: "", value: "" };
+          return { [entity]: { ...existing, field } };
+        }
+        return f;
+      }),
+    );
   }
 
   function handleAddFilterBtnClick(
@@ -237,3 +253,4 @@ export default function ExportForm() {
     </div>
   );
 }
+
