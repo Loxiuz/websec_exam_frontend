@@ -1,17 +1,9 @@
 import RequireAuth from "../auth/RequireAuth";
 import type { ExportDtoResponse } from "../types";
 import "./ExportRequestTable.css";
+import createDateString from "../utils/utils.tsx";
 
-function createDateString(dateString: string): string {
-  const date = new Date(dateString);
 
-  const timeWithoutSeconds = date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
-  return date.toLocaleDateString() + " | " + timeWithoutSeconds;
-}
 
 export default function ExportRequestTable({
   exportRequests,
@@ -42,7 +34,7 @@ export default function ExportRequestTable({
       <tbody id="export-request-table-body">
         {exportRequests.map((request) => (
           <tr key={request.id}>
-            <td>{request.employeeId}</td>
+            <td>{request.employeeId.split("-")[0]}</td>
             <td>{request.exportFormat}</td>
             <td>{createDateString(request.exportCreation)}</td>
             <td>{request.selectedEntities}</td>

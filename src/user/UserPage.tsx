@@ -28,6 +28,7 @@ export default function UserPage() {
   const [notesDialogOpen, setNotesDialogOpen] = useState(false);
   const [selectedExportRequestNotes, setSelectedExportRequestNotes] =
     useState<ExportNotes[]>();
+  const isAnyDialogOpen = filtersDialogOpen || notesDialogOpen;
 
   useEffect(() => {
     const fetchEmployeeImage = async () => {
@@ -133,7 +134,7 @@ export default function UserPage() {
         <div id="employee-id-container" className="user-info-item">
           <p>
             Employee ID:{" "}
-            {employeeId && <span>{employeeId || "N/A"}</span>}
+            {employeeId && <span>{employeeId.split("-")[0] || "N/A"}</span>}
           </p>
         </div>
       </div>
@@ -144,22 +145,24 @@ export default function UserPage() {
         setDialogOpen={setFiltersDialogOpen}
         setNotesDialogOpen={setNotesDialogOpen}
       />
-      <div id="dialogs-container">
-        <dialog open={filtersDialogOpen} id="applied-filters-dialog">
-          <DashboardAppliedFiltersDialog
-            appliedFilters={selectedExportRequest?.appliedFilters || []}
-            exportRequestId={selectedExportRequest?.id}
+      {isAnyDialogOpen && (
+        <div id="dialogs-container">
+          <dialog open={filtersDialogOpen} id="applied-filters-dialog">
+            <DashboardAppliedFiltersDialog
+              appliedFilters={selectedExportRequest?.appliedFilters || []}
+              exportRequestId={selectedExportRequest?.id}
+            />
+            <button onClick={() => setFiltersDialogOpen(false)}>Close</button>
+          </dialog>
+          <ExportNotesDialog
+            open={notesDialogOpen}
+            onClose={() => setNotesDialogOpen(false)}
+            exportNotes={
+              selectedExportRequestNotes ? selectedExportRequestNotes[0] : null
+            }
           />
-          <button onClick={() => setFiltersDialogOpen(false)}>Close</button>
-        </dialog>
-        <ExportNotesDialog
-          open={notesDialogOpen}
-          onClose={() => setNotesDialogOpen(false)}
-          exportNotes={
-            selectedExportRequestNotes ? selectedExportRequestNotes[0] : null
-          }
-        />
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import {
 } from "../api/exportApi";
 import "./ExportNotesPage.css";
 import ExportNotesDialog from "./ExportNotesDialog";
+import createDateString from "../utils/utils.tsx";
 
 export default function ExportNotesPage() {
   const [exportNotes, setExportNotes] = useState<ExportNotes[]>([]);
@@ -142,7 +143,7 @@ export default function ExportNotesPage() {
                   <td>{notes.id?.split("-")[0]}</td>
                   <td>{notes.exportRequestId?.split("-")[0]}</td>
                   <td>{notes.employeeId?.split("-")[0]}</td>
-                  <td>{notes.creationDate}</td>
+                  <td>{createDateString(notes.creationDate)}</td>
                   <td>{notes.notes}</td>
                   <td>
                     <button

@@ -2,19 +2,33 @@
   width: 100%;
   height: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 14px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  clip-path: inset(0 round 10px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
+#user-management-table th,
 #user-management-table td {
-  border: 2px solid #3b3b3b;
+  border: 1px solid #a6a6a6;
   text-align: center;
+  padding: 0.65rem 0.55rem;
 }
 
 #user-management-table button {
   color: black;
-  border: none;
+  border: 1px solid #8f8f8f;
   padding: 5px 10px;
   cursor: pointer;
   text-align: center;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+#user-management-table button:hover {
+  background-color: #3b3b3b;
+  color: #ffffff;
 }
 
 #user-management-table-header {
@@ -25,10 +39,15 @@
 }
 
 #user-management-table-header th {
-  padding: 10px;
+  padding: 0.8rem;
   border-bottom: 2px solid #3b3b3b;
 }
 
 #user-management-table-body {
   background-color: #ffffff;
 }
+
+#user-management-table-body tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+

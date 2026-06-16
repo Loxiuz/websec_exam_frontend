@@ -1,6 +1,10 @@
 #export-page-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #d0d0d0;
+  border: 1px solid #8f8f8f;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }

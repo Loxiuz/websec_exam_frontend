@@ -180,7 +180,7 @@ export default function ExportForm() {
   return (
     <div id="export-form-container">
       <h3>
-        Export Entities <span>(employee: {formData.employeeId})</span>
+        Export Entities <span>(employee: {formData.employeeId.split("-")[0]})</span>
       </h3>
       <form onSubmit={handleFormSubit} id="export-form">
         <div id="entity-checkbox-container">
