@@ -2,6 +2,17 @@ import RequireAuth from "../auth/RequireAuth";
 import type { ExportDtoResponse } from "../types";
 import "./ExportRequestTable.css";
 
+function createDateString(dateString: string): string {
+  const date = new Date(dateString);
+
+  const timeWithoutSeconds = date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return date.toLocaleDateString() + " | " + timeWithoutSeconds;
+}
+
 export default function ExportRequestTable({
   exportRequests,
   setSelectedExportRequest,
@@ -13,16 +24,6 @@ export default function ExportRequestTable({
   setDialogOpen: (open: boolean) => void;
   setNotesDialogOpen: (open: boolean) => void;
 }) {
-  function createDateString(dateString: string): string {
-    const date = new Date(dateString);
-
-    const timeWithoutSeconds = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    return date.toLocaleDateString() + " | " + timeWithoutSeconds;
-  }
   return (
     <table id="export-request-table">
       <thead id="export-request-table-header">

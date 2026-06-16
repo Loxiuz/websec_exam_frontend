@@ -139,9 +139,9 @@ export default function ExportNotesPage() {
                 <tr
                   key={noteId ?? `${notes.exportRequestId ?? "note"}-${index}`}
                 >
-                  <td>{notes.id}</td>
-                  <td>{notes.exportRequestId}</td>
-                  <td>{notes.employeeId}</td>
+                  <td>{notes.id?.split("-")[0]}</td>
+                  <td>{notes.exportRequestId?.split("-")[0]}</td>
+                  <td>{notes.employeeId?.split("-")[0]}</td>
                   <td>{notes.creationDate}</td>
                   <td>{notes.notes}</td>
                   <td>

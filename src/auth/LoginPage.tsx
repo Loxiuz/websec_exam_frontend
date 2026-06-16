@@ -28,9 +28,9 @@ export default function LoginPage() {
       nav("/export");
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Login failed. Please try again.");
       setUsername("");
       setPassword("");
+      globalThis.location.reload();
     }
   }
 
