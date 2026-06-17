@@ -124,6 +124,7 @@ async function setExportNotesHidden(exportNoteId: string, isHidden: boolean) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      ...csrfHeaders(),
     },
     credentials: "include",
     body: JSON.stringify({ isHidden: isHidden }),
