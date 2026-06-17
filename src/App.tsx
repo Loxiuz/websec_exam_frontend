@@ -48,7 +48,7 @@ function App() {
             }
           />
           <Route
-            path="manage-users" //TODO: implmenent full user management page
+            path="manage-users"
             element={
               <RequireAuth permission="MANAGE_USERS">
                 <UserManagementPage />
